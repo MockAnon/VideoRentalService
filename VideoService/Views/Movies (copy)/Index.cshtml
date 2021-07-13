@@ -1,0 +1,27 @@
+﻿@model VideoService.ViewModels.RandomMovieViewModel;
+
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var className = Model.Customers.Count > 5 ? "popular" : null;
+}
+
+<h2>Movies Index</h2>
+
+<h2 class="@className">@Model.Movie.Name</h2>
+
+@*@if (Model.Movie.Count == 0)
+{
+    <text>No movies available.</text>
+}
+else
+{
+    <ul>
+        @foreach (var movie in Model.Movie)
+        {
+        <li>
+            @customer.Name
+        </li>
+        }
+    </ul>
+}*@
