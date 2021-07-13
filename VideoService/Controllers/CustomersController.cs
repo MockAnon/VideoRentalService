@@ -10,69 +10,34 @@ using VideoService.ViewModels;
 
 namespace VideoService.Controllers
 {
-    public class MoviesController : Controller
+    public class CustomersController : Controller
     {
-        public IActionResult Index(int? pageIndex, string sortBy)
+        public IActionResult Index()
         {
-            if (!pageIndex.HasValue)
-            {
-                pageIndex = 1;
-            }
-            if (String.IsNullOrEmpty(sortBy))
-            {
-                sortBy = "Name";
-            }
+            var customers = GetCustomers();
 
-            var movie = new Movie() { Name = "Shrek!" };
-
-            var customers = new List<Customer>
-            {
-                new Customer { Name = "Customer 1" },
-                new Customer { Name = "Customer 2" }
-            };
-
-
-            var viewModel = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customers = customers
-            };
-
-            return View(viewModel);
+            return View(customers);
             //return Content(String.Format("pageIndex={0}&sortBy={1}", pageIndex, sortBy));
         }
 
-        //Get: Movies/Random
-        public ActionResult Random()
+        public IActionResult Details (int id)
         {
-            var movies = new Movie() { Name = "Shrek!" };
+            var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
 
-            var customers = new List<Customer>
-            {
-                new Customer { Name = "Customer 1" },
-                new Customer { Name = "Customer 2" }
-            };
+            if (customer == null)
+                return Content("NOT FOUND");
+                //return HttpNotFound();
 
-
-            var viewModel = new RandomMovieViewModel
-            {
-                Movies = movies,
-                Customers = customers
-            };
-
-            return View(viewModel);
-            //return new ViewResult();
+            return View(customer);
         }
 
-        public ActionResult Edit(int id)
+        private IEnumerable<Customer> GetCustomers()
         {
-            return Content("id=" + id);
-        }
-
-        [Route("movies/released/{year}/{month:regex(^\\d{{2}}$):range(1,12)}")]
-        public ActionResult ByReleaseDate(int year, int month)
-        {
-            return Content(year + "/" + month);
+            return new List<Customer>
+            {
+                new Customer { Id = 1, Name = "John Smith" },
+                new Customer { Id = 2, Name = "Mary Williams" }
+            };
         }
     }
 }

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<VideoService.Models.Customer>;
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var className = Model.Customer.Count > 5 ? "popular" : null;
+}
+
+<h2>Customer</h2>
+
+@if (!Model.Any())
+{
+    <p>We don't have any customers</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Customer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
